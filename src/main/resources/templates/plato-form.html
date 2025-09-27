@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Agregar Plato</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <!-- Agrega Bootstrap Icons -->
+    </head>
+    <body>
+        
+        <div class="col-md-3 mb-2 d-flex justify-content-center">
+            <a href="/trabajador/panel" class="btn btn-primary" style="width: 100%; text-align: center;">Ir al panel</a>
+        </div>
+        
+        
+        <div class="container mt-4"> 
+            <!--Al poner la url personas esto quiere decir que primero enviara a mi url y de mi url que es mi controlador enviara a la base de datos-->
+            <!--La URL donde se enviara-->     <!--Asocia el objeto Producto pero producto es mi variable de mi objeto Producto.-->
+            <form th:action="@{/plato/guardar}" th:object="${plato}" method="post" enctype="multipart/form-data">
+                <div class="row g-3">
+
+                    <input type="hidden" th:field="*{id_plato}"/>
+
+                    
+                    <div class="col-sm-6">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" th:field="*{nombre}" class="form-control" id="nombre" required />
+                    </div>                    
+                    <p th:if="${#fields.hasErrors('nombre')}"                       
+                       th:errors="*{nombre}" style="color: red;"> </p>
+
+                    
+                    
+                    <div class="col-sm-6">
+                        <label for="descripcion" class="form-label">Descripción:</label>
+                        <input type="text" th:field="*{descripcion}" class="form-control" id="descripcion" required />
+                    </div>                    
+                    <p th:if="${#fields.hasErrors('descripcion')}"                       
+                       th:errors="*{descripcion}"  style="color: red;"> </p>
+                 
+
+                    <div class="col-12">
+                        <label for="precio" class="form-label">Precio:</label>
+                        <input type="number" th:field="*{precio}" class="form-control" id="precio" required />
+                    </div>                    
+                    <p th:if="${#fields.hasErrors('precio')}"                       
+                       th:errors="*{precio}"  style="color: red;"> </p>
+                    
+                    
+
+                    <div class="col-12">
+                        <label for="stock" class="form-label">Stock:</label>
+                        <input type="number" th:field="*{stock}" class="form-control" id="stock" placeholder="Cantidad del producto" required />
+                    </div>
+                    <p th:if="${#fields.hasErrors('stock')}"                       
+                       th:errors="*{stock}"  style="color: red;"> </p>
+                    
+                    
+                    
+                     <div class="col-12">
+                        <label for="stock" class="form-label">Fecha De Ingreso</label>
+                        <input type="date" th:field="*{fechaIngreso}" class="form-control" id="fechaIngreso" placeholder="Fecha que ingresa el producto" required />
+                    </div>
+                    
+                    <p th:if="${#fields.hasErrors('fechaIngreso')}"                       
+                       th:errors="*{fechaIngreso}"  style="color: red;"> </p>
+                    
+                  
+                    
+                    <!-- Agregar opción para subir una imagen -->
+                    <div class="col-12">
+                        <label for="imagen" class="form-label">Imagen del Producto:</label>
+                        <input type="file" name="foto" accept="image/*" required/>                        
+                    </div>
+                 
+
+                    <hr class="my-4">
+
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Agregar Plato</button>
+                </div>
+            </form>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        
+    </body>
+</html>
