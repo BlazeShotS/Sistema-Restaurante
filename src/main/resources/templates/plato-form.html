@@ -28,7 +28,6 @@
                     </div>                    
                     <p th:if="${#fields.hasErrors('nombre')}"                       
                        th:errors="*{nombre}" style="color: red;"> </p>
-
                     
                     
                     <div class="col-sm-6">
@@ -53,26 +52,36 @@
                         <input type="number" th:field="*{stock}" class="form-control" id="stock" placeholder="Cantidad del producto" required />
                     </div>
                     <p th:if="${#fields.hasErrors('stock')}"                       
-                       th:errors="*{stock}"  style="color: red;"> </p>
+                       th:errors="*{stock}"  style="color: red;"> 
+                    </p>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Categoría</label>
+                        <select name="id_categoria" class="form-select" required>
+                            <option value="">Seleccione una categoría</option>                        
+                            <option th:each="categoria : ${categorias}"
+                                    th:value="${categoria.id_categoria}"
+                                    th:text="${categoria.nombre}"
+                                    th:selected="${plato.categoria != null and plato.categoria.id_categoria == categoria.id_categoria}">
+                            </option>
+                        </select>
+                    </div>
                     
                     
-                    
-                     <div class="col-12">
+                    <div class="col-12">
                         <label for="stock" class="form-label">Fecha De Ingreso</label>
                         <input type="date" th:field="*{fechaIngreso}" class="form-control" id="fechaIngreso" placeholder="Fecha que ingresa el producto" required />
                     </div>
                     
                     <p th:if="${#fields.hasErrors('fechaIngreso')}"                       
-                       th:errors="*{fechaIngreso}"  style="color: red;"> </p>
-                    
-                  
+                       th:errors="*{fechaIngreso}"  style="color: red;"> 
+                    </p>                
                     
                     <!-- Agregar opción para subir una imagen -->
                     <div class="col-12">
                         <label for="imagen" class="form-label">Imagen del Producto:</label>
                         <input type="file" name="foto" accept="image/*" required/>                        
-                    </div>
-                 
+                    </div>                
 
                     <hr class="my-4">
 

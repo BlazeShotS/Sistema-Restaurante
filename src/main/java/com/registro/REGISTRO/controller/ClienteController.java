@@ -2,12 +2,9 @@ package com.registro.REGISTRO.controller;
 
 
 import com.registro.REGISTRO.model.Cliente;
-import com.registro.REGISTRO.model.Trabajador;
 import com.registro.REGISTRO.service.ClienteService;
-import com.registro.REGISTRO.service.TrabajadorService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,24 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
 @Controller
 @RequestMapping("/cliente")
-public class ClienteController {
+public class ClienteController {    
     
-    
-    @Autowired
-    private ClienteService clienteService;        
+    private final ClienteService clienteService;
 
-    @Autowired
-    private TrabajadorService trabajadorService;
-    
+    ClienteController(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
     
     @GetMapping("/loginCliente") 
     public String mostrarLogin() {
         return "ClienteLogin"; 
     }
-    
     
     @GetMapping  // aca le digo que /cliente es clientes-list (POR DEFECTO)
     public String listarCliente(Model model){ 
@@ -62,7 +55,7 @@ public class ClienteController {
         if (result.hasErrors()) { /*PARA LA VALIDACION*/
             return "clientes-form";
         }
-                                                             
+
         clienteService.guardar(cliente); //Guarda el objeto Cliente en la base de datos 
         return "redirect:/pedido/platos";
     }
@@ -72,8 +65,7 @@ public class ClienteController {
     public String mostrarFormularioEditarCliente (@PathVariable Long id_cliente,Model model){
         model.addAttribute("cliente", clienteService.obtenerPorId(id_cliente));
         return "clientes-form";
-    }*/
-    
+    }*/    
     
     
     /*----CUANDO INICIA SESION , VER SI LAS CREDENCIALES SON CORRECTAS-----*/
@@ -88,8 +80,7 @@ public class ClienteController {
             // Redirigir al carrito o la página principal
             session.setAttribute("nombre_cliente", cliente.getNombre());
             return "redirect:/pedido/platos";
-        } else {
-            // Si las credenciales son incorrectas, mostrar mensaje de error
+        } else {            
             model.addAttribute("error", "ID o contraseña incorrectos.");
             return "ClienteLogin";  // Redirigir al formulario de login cliente nuevamente
         }

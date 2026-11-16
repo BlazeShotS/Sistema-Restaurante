@@ -3,6 +3,7 @@ package com.registro.REGISTRO.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,50 +15,42 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.time.LocalDate;
 
-
 @Entity
 public class Plato {
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_plato;
-    
+
     @NotBlank(message = "Ingrese un nombre")
     @NotNull
     private String nombre;
-    
+
     @NotBlank(message = "Ingrese la descripcion")
     @NotNull
     private String descripcion;
-        
-    
+
     @PositiveOrZero(message = "El precio no puede ser negativo")
     @NotNull
     private Double precio;
-    
+
     @PositiveOrZero(message = "La cantidad no puede ser negativo")
     @NotNull
     private int stock;
-    
-    
-    @Column (name="fecha_ingreso")
-    @PastOrPresent(message= "La fecha no puede ser futura")
+
+    @Column(name = "fecha_ingreso")
+    @PastOrPresent(message = "La fecha no puede ser futura")
     @NotNull
     LocalDate fechaIngreso;
-    
-    
+
     @Column(name = "ruta_Imagen")
     private String rutaImagen;
 
-    
     @ManyToOne // Indica que este producto está relacionado con un administrador
-               //Columna de la tabla producto         , Columna de la tabla administrador
+               // Columna de la tabla producto , Columna de la tabla administrador
     @JoinColumn(name = "id_trabajador", referencedColumnName = "id_trabajador")
     private Trabajador trabajador; // Relación con la entidad Administrador
 
-    
-    
     public void descontarStock(int cantidad) {
         if (this.stock >= cantidad) {
             this.stock -= cantidad;
@@ -65,8 +58,11 @@ public class Plato {
             throw new IllegalArgumentException("No hay suficiente stock disponible");
         }
     }
-    
-    
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    private Categoria categoria;
+
     public Long getId_plato() {
         return id_plato;
     }
@@ -131,10 +127,11 @@ public class Plato {
         this.trabajador = trabajador;
     }
 
-    
-    
-    
-    
-    
-    
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }
