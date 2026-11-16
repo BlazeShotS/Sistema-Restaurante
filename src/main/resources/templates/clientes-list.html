@@ -1,53 +1,110 @@
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Mostrar todo los clientes</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <!-- Agrega Bootstrap Icons -->        
-    </head>
-    <body>
-        
-        <div class="col-md-3 mb-2">
-            <a href="/trabajador/panel" class="btn btn-primary w-100">Ir al panel</a>
+<head>
+    <title>Mostrar todo los clientes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/panel-styles.css}">
+</head>
+<body>
+
+    <div class="overlay-menu" id="overlay-menu" onclick="alternarMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="marca">
+            <div class="logo"><i class="bi bi-egg-fried"></i></div>
+            <div>SGE<small>Gestion de pedidos</small></div>
         </div>
 
-        <main class="col-md-auto container mt-5">
-            <h2 class="text-white bg-primary p-3 text-center" style="font-family: Arial, sans-serif;">Registro de Clientes</h2>
+        <nav class="nav flex-column">
+            <a href="/trabajador/panel" class="nav-link"><i class="bi bi-grid-1x2"></i> Panel</a>
 
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover shadow-sm">
-                    <thead class="bg-primary text-white" style="font-family: Arial, sans-serif;">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Aca esta haciendo como un get, capturando el objeto con sus atributos y colocandolo en la tabla -->
-                        <tr th:each="cliente : ${clientes}">
-                            <td th:text="${cliente.idCliente}"></td>
-                            <td th:text="${cliente.nombre}"></td>
-                            <td th:text="${cliente.apellido}"></td>
-                            <td th:text="${cliente.telefono}"></td>
-                            <td th:text="${cliente.email}"></td>
-                            <td>                                
-                                <a class="btn btn-danger" th:href="@{/cliente/eliminar/{id}(id=${cliente.idCliente})}"
-                                   onclick="return confirm ('¿Estás seguro que deseas eliminar?')">
-                                    <i class="fas fa-trash-alt"></i> Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="seccion">Clientes</div>
+            <a href="/cliente" class="nav-link active"><i class="bi bi-people"></i> Todos los clientes</a>
+
+            <div class="seccion">Platos</div>
+            <a href="/plato" class="nav-link"><i class="bi bi-list-ul"></i> Todos los platos</a>
+            <a href="/plato/nuevo" class="nav-link"><i class="bi bi-plus-circle"></i> Agregar un nuevo plato</a>
+            <a href="/pedido/platos" class="nav-link"><i class="bi bi-card-text"></i> Platos completos</a>
+        </nav>
+
+        <div class="usuario">
+            <div class="avatar"><i class="bi bi-person"></i></div>
+            <div class="flex-grow-1">
+                <div>Trabajador</div>
+                <small>Sesion activa</small>
+            </div>
+            <a href="/trabajador/login" class="btn btn-sm btn-outline-light" title="Cerrar sesion">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
+    </aside>
+
+    <div class="contenido">
+        <header class="topbar">
+            <button class="btn btn-outline-secondary btn-menu" onclick="alternarMenu()" aria-label="Abrir menu"><i class="bi bi-list"></i></button>
+            <div>
+                <div class="migas"><i class="bi bi-house-door me-1"></i>SGE / <span>Clientes</span></div>
+                <h1>Clientes</h1>
+            </div>
+        </header>
+
+        <main class="main-area">
+            <div class="tarjeta">
+                <div class="tarjeta-cabecera">
+                    <h2><i class="bi bi-people me-2"></i>Registro de clientes</h2>
+                    <a href="/trabajador/panel" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>Volver al panel</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover tabla-sge">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">Email</th>
+                                <th scope="col" class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cliente : ${clientes}">
+                                <td class="text-secondary" th:text="${cliente.idCliente}"></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="avatar-cli" style="background:#0d6efd"
+                                              th:text="${#strings.substring(cliente.nombre, 0, 1) + #strings.substring(cliente.apellido, 0, 1)}"></span>
+                                        <span class="fw-semibold" th:text="${cliente.nombre}"></span>
+                                    </div>
+                                </td>
+                                <td th:text="${cliente.apellido}"></td>
+                                <td class="text-nowrap"><i class="bi bi-telephone text-secondary me-1"></i><span th:text="${cliente.telefono}"></span></td>
+                                <td><i class="bi bi-envelope text-secondary me-1"></i><span th:text="${cliente.email}"></span></td>
+                                <td class="text-end">
+                                    <a class="btn-accion borrar"
+                                       th:href="@{/cliente/eliminar/{id}(id=${cliente.idCliente})}"
+                                       title="Eliminar" aria-label="Eliminar cliente"
+                                       onclick="return confirm('Estas seguro que deseas eliminar?')">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </div>
 
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function alternarMenu() {
+            document.getElementById('sidebar').classList.toggle('abierto');
+            document.getElementById('overlay-menu').classList.toggle('abierto');
+        }
+    </script>
+
+</body>
 </html>

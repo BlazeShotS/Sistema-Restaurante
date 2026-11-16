@@ -3,13 +3,7 @@ package com.registro.REGISTRO.service;
 import com.registro.REGISTRO.model.Plato;
 import com.registro.REGISTRO.repository.PlatoRepository;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-/**
- *
- * @author mikel
- */
 
 @Service
 public class PlatoService {

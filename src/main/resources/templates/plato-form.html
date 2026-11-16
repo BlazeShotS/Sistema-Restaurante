@@ -1,97 +1,182 @@
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Agregar Plato</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> <!-- Agrega Bootstrap Icons -->
-    </head>
-    <body>
-        
-        <div class="col-md-3 mb-2 d-flex justify-content-center">
-            <a href="/trabajador/panel" class="btn btn-primary" style="width: 100%; text-align: center;">Ir al panel</a>
+<head>
+    <title>Agregar Plato</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/panel-styles.css}">
+</head>
+<body>
+
+    <div class="overlay-menu" id="overlay-menu" onclick="alternarMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="marca">
+            <div class="logo"><i class="bi bi-egg-fried"></i></div>
+            <div>SGE<small>Gestion de pedidos</small></div>
         </div>
-        
-        
-        <div class="container mt-4"> 
-            <!--Al poner la url personas esto quiere decir que primero enviara a mi url y de mi url que es mi controlador enviara a la base de datos-->
-            <!--La URL donde se enviara-->     <!--Asocia el objeto Producto pero producto es mi variable de mi objeto Producto.-->
-            <form th:action="@{/plato/guardar}" th:object="${plato}" method="post" enctype="multipart/form-data">
-                <div class="row g-3">
 
-                    <input type="hidden" th:field="*{id_plato}"/>
+        <nav class="nav flex-column">
+            <a href="/trabajador/panel" class="nav-link"><i class="bi bi-grid-1x2"></i> Panel</a>
 
-                    
-                    <div class="col-sm-6">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input type="text" th:field="*{nombre}" class="form-control" id="nombre" required />
-                    </div>                    
-                    <p th:if="${#fields.hasErrors('nombre')}"                       
-                       th:errors="*{nombre}" style="color: red;"> </p>
-                    
-                    
-                    <div class="col-sm-6">
-                        <label for="descripcion" class="form-label">Descripción:</label>
-                        <input type="text" th:field="*{descripcion}" class="form-control" id="descripcion" required />
-                    </div>                    
-                    <p th:if="${#fields.hasErrors('descripcion')}"                       
-                       th:errors="*{descripcion}"  style="color: red;"> </p>
-                 
+            <div class="seccion">Clientes</div>
+            <a href="/cliente" class="nav-link"><i class="bi bi-people"></i> Todos los clientes</a>
 
-                    <div class="col-12">
-                        <label for="precio" class="form-label">Precio:</label>
-                        <input type="number" th:field="*{precio}" class="form-control" id="precio" required />
-                    </div>                    
-                    <p th:if="${#fields.hasErrors('precio')}"                       
-                       th:errors="*{precio}"  style="color: red;"> </p>
-                    
-                    
+            <div class="seccion">Platos</div>
+            <a href="/plato" class="nav-link"><i class="bi bi-list-ul"></i> Todos los platos</a>
+            <a href="/plato/nuevo" class="nav-link active"><i class="bi bi-plus-circle"></i> Agregar un nuevo plato</a>
+            <a href="/pedido/platos" class="nav-link"><i class="bi bi-card-text"></i> Platos completos</a>
+        </nav>
 
-                    <div class="col-12">
-                        <label for="stock" class="form-label">Stock:</label>
-                        <input type="number" th:field="*{stock}" class="form-control" id="stock" placeholder="Cantidad del producto" required />
-                    </div>
-                    <p th:if="${#fields.hasErrors('stock')}"                       
-                       th:errors="*{stock}"  style="color: red;"> 
-                    </p>
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Categoría</label>
-                        <select name="id_categoria" class="form-select" required>
-                            <option value="">Seleccione una categoría</option>                        
-                            <option th:each="categoria : ${categorias}"
-                                    th:value="${categoria.id_categoria}"
-                                    th:text="${categoria.nombre}"
-                                    th:selected="${plato.categoria != null and plato.categoria.id_categoria == categoria.id_categoria}">
-                            </option>
-                        </select>
-                    </div>
-                    
-                    
-                    <div class="col-12">
-                        <label for="stock" class="form-label">Fecha De Ingreso</label>
-                        <input type="date" th:field="*{fechaIngreso}" class="form-control" id="fechaIngreso" placeholder="Fecha que ingresa el producto" required />
-                    </div>
-                    
-                    <p th:if="${#fields.hasErrors('fechaIngreso')}"                       
-                       th:errors="*{fechaIngreso}"  style="color: red;"> 
-                    </p>                
-                    
-                    <!-- Agregar opción para subir una imagen -->
-                    <div class="col-12">
-                        <label for="imagen" class="form-label">Imagen del Producto:</label>
-                        <input type="file" name="foto" accept="image/*" required/>                        
-                    </div>                
+        <div class="usuario">
+            <div class="avatar"><i class="bi bi-person"></i></div>
+            <div class="flex-grow-1">
+                <div>Trabajador</div>
+                <small>Sesion activa</small>
+            </div>
+            <a href="/trabajador/login" class="btn btn-sm btn-outline-light" title="Cerrar sesion">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
+    </aside>
 
-                    <hr class="my-4">
+    <div class="contenido">
+        <header class="topbar">
+            <button class="btn btn-outline-secondary btn-menu" onclick="alternarMenu()" aria-label="Abrir menu"><i class="bi bi-list"></i></button>
+            <div>
+                <div class="migas"><i class="bi bi-house-door me-1"></i>SGE / <span>Nuevo Plato</span></div>
+                <h1>Agregar un nuevo plato</h1>
+            </div>
+        </header>
 
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">Agregar Plato</button>
+        <main class="main-area">
+            <div class="tarjeta">
+                <div class="tarjeta-cabecera">
+                    <h2><i class="bi bi-plus-circle me-2"></i>Agregar un nuevo plato</h2>
+                    <a href="/trabajador/panel" class="btn btn-sm btn-outline-light"><i class="bi bi-arrow-left me-1"></i>Volver al panel</a>
                 </div>
-            </form>
-        </div>
+                <div class="p-4">
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                    <form th:action="@{/plato/guardar}" th:object="${plato}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" th:field="*{id_plato}"/>
 
-        
-    </body>
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="form-seccion"><i class="bi bi-info-circle"></i>Informacion del plato</div>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                                            <input type="text" th:field="*{nombre}" class="form-control" id="nombre" placeholder="Ej. Lomo saltado" required>
+                                        </div>
+                                        <p th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-danger small mt-1"></p>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="descripcion" class="form-label fw-semibold">Descripcion</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                            <input type="text" th:field="*{descripcion}" class="form-control" id="descripcion" placeholder="Breve descripcion" required>
+                                        </div>
+                                        <p th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-danger small mt-1"></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-seccion"><i class="bi bi-box-seam"></i>Precio e inventario</div>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-4">
+                                        <label for="precio" class="form-label fw-semibold">Precio</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">S/</span>
+                                            <input type="number" th:field="*{precio}" class="form-control" id="precio" min="0" step="0.01" placeholder="0.00" required>
+                                        </div>
+                                        <p th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="text-danger small mt-1"></p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="stock" class="form-label fw-semibold">Stock</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-stack"></i></span>
+                                            <input type="number" th:field="*{stock}" class="form-control" id="stock" placeholder="Cantidad" required>
+                                        </div>
+                                        <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="text-danger small mt-1"></p>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="fechaIngreso" class="form-label fw-semibold">Fecha de ingreso</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            <input type="date" th:field="*{fechaIngreso}" class="form-control" id="fechaIngreso" required>
+                                        </div>
+                                        <p th:if="${#fields.hasErrors('fechaIngreso')}" th:errors="*{fechaIngreso}" class="text-danger small mt-1"></p>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label class="form-label fw-semibold">Categoria</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="bi bi-grid"></i></span>
+                                            <select name="id_categoria" class="form-select" required>
+                                                <option value="">Seleccione una categoria</option>
+                                                <option th:each="categoria : ${categorias}"
+                                                        th:value="${categoria.id_categoria}"
+                                                        th:text="${categoria.nombre}"
+                                                        th:selected="${plato.categoria != null and plato.categoria.id_categoria == categoria.id_categoria}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-seccion"><i class="bi bi-image"></i>Imagen del producto</div>
+                                <div class="vista-previa mb-3" id="vista-previa">
+                                    <span><i class="bi bi-image me-1"></i>Vista previa de la imagen</span>
+                                </div>
+                                <input type="file" name="foto" accept="image/*" class="form-control" onchange="previsualizarImagen(this)">
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-primary flex-grow-1 py-2" type="submit">
+                                <i class="bi bi-check-lg me-1"></i>Agregar Plato
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function alternarMenu() {
+            document.getElementById('sidebar').classList.toggle('abierto');
+            document.getElementById('overlay-menu').classList.toggle('abierto');
+        }
+
+        function previsualizarImagen(input) {
+            var archivo = input.files[0];
+            var cont = document.getElementById('vista-previa');
+            if (!archivo) {
+                cont.innerHTML = '<span><i class="bi bi-image me-1"></i>Vista previa de la imagen</span>';
+                return;
+            }
+            var lector = new FileReader();
+            lector.onload = function(e) {
+                cont.innerHTML = '<img src="' + e.target.result + '" alt="Vista previa">';
+            };
+            lector.readAsDataURL(archivo);
+        }
+    </script>
+
+</body>
 </html>

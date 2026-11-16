@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.registro.REGISTRO.controller;
 
 import com.registro.REGISTRO.model.Trabajador;
@@ -17,18 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-/**
- *
- * @author mikel
- */
 @Controller
 @RequestMapping("/trabajador")
 public class TrabajadorController {    
     
     @Autowired
     private TrabajadorService trabajadorService;
-    
-    
+        
     @GetMapping("/login") 
     public String mostrarLogin() {
         return "LoginTrabajador"; 
@@ -39,8 +30,6 @@ public class TrabajadorController {
         return "PanelTrabajador"; 
     }
         
-    
-    
     @PostMapping("/login") // Manejador de la solicitud de inicio de sesión
     public String login(HttpSession session,@RequestParam("id") Long id, @RequestParam("contrasena") String contrasena,Model model ) {
         
@@ -57,8 +46,5 @@ public class TrabajadorController {
             return "LoginTrabajador"; 
         }
     }
-    
-    
-    
     
 }
