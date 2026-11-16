@@ -19,7 +19,7 @@ public class TrabajadorController {
     
     @Autowired
     private TrabajadorService trabajadorService;
-        
+    
     @GetMapping("/login") 
     public String mostrarLogin() {
         return "LoginTrabajador"; 

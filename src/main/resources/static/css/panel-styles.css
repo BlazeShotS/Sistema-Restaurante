@@ -406,16 +406,50 @@ body {
 }
 
 .acceso .icono {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--c1, #4f9bff), var(--c2, #0d6efd));
-  box-shadow: 0 10px 20px -8px var(--c2, #0d6efd);
+  position: relative;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(140deg, var(--c1, #4f9bff), var(--c2, #0d6efd));
   color: #fff;
   display: grid;
   place-items: center;
-  font-size: 1.1rem;
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.35),
+    inset 0 -3px 8px rgba(0,0,0,.22),
+    0 10px 22px -8px var(--c2, #0d6efd);
+  transition: transform .18s ease;
+}
+
+.acceso .icono::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 85% at 18% 0%, rgba(255,255,255,.32), transparent 55%),
+    radial-gradient(90% 70% at 100% 100%, rgba(0,0,0,.16), transparent 60%);
+}
+
+.acceso .icono::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255,255,255,.22);
+}
+
+.acceso .icono svg {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1.5px 2px rgba(0,0,0,.28));
+}
+
+.acceso:hover .icono {
+  transform: translateY(-2px) scale(1.04);
 }
 
 .acceso strong {
