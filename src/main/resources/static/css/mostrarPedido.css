@@ -1,0 +1,218 @@
+:root {
+  --ink: #14181f;
+  --dark: #1f2329;
+  --dark2: #272c35;
+  --blue: #2f7bff;
+  --blue2: #1d5fe0;
+  --navy: #27498a;
+  --bg: #f4f5f7;
+  --line: #e6e8ec;
+  --muted: #6b7280;
+  --ok: #1a8754;
+  --amber: #f5a623;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+/* Navbar */
+.nav-sge {
+  background: var(--dark);
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+
+.nav-sge .navbar-brand {
+  color: #fff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4b94ff, var(--blue2));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(47, 123, 255, .4);
+}
+
+.nav-sge .nav-link {
+  color: #aab2c0;
+  font-size: .9rem;
+  font-weight: 500;
+  padding: .5rem .9rem !important;
+  border-radius: 10px;
+  transition: .2s;
+}
+
+.nav-sge .nav-link i {
+  margin-right: .35rem;
+}
+
+.nav-sge .nav-link:hover,
+.nav-sge .nav-link.active {
+  color: #fff;
+  background: rgba(47, 123, 255, .16);
+}
+
+.nav-sge .nav-link.worker {
+  border: 1px solid rgba(255, 255, 255, .18);
+  color: #fff;
+}
+
+/* Pedidos */
+.card-sge {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(20, 24, 31, .05);
+}
+
+.tbl {
+  margin: 0;
+  vertical-align: middle;
+}
+
+.tbl th {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 1.2rem;
+}
+
+.tbl td {
+  padding: 1rem 1.2rem;
+  border-color: var(--line);
+}
+
+.tbl img {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.qty button {
+  border: 0;
+  background: #f4f5f7;
+  width: 30px;
+  height: 30px;
+  font-weight: 700;
+}
+
+.qty button:hover {
+  background: #e3ebff;
+  color: var(--blue2);
+}
+
+.qty span {
+  min-width: 34px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.btn-del {
+  border: 0;
+  background: #fdecec;
+  color: #d92d3a;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  text-decoration: none;
+  display: inline-grid;
+  place-items: center;
+}
+
+.btn-del:hover {
+  background: #d92d3a;
+  color: #fff;
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  margin-bottom: .6rem;
+}
+
+.sum-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  font-size: 1.3rem;
+  border-top: 1px dashed var(--line);
+  padding-top: 1rem;
+  margin-top: .8rem;
+}
+
+.sum-total span:last-child {
+  color: var(--blue2);
+}
+
+.btn-ok {
+  background: var(--ok);
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: .8rem 1rem;
+}
+
+.btn-ok:hover {
+  background: #146c43;
+  color: #fff;
+}
+
+/* Footer */
+.foot-sge {
+  background: var(--dark);
+  color: #aab2c0;
+  text-align: center;
+  padding: 1.4rem 1rem;
+  font-size: .85rem;
+  margin-top: 3rem;
+}
+
+.foot-sge a {
+  color: #d7dce6;
+  text-decoration: none;
+  margin: 0 .6rem;
+}
+
+.foot-sge a:hover {
+  color: #fff;
+}

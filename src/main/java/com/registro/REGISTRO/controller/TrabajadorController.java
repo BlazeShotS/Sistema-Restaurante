@@ -29,7 +29,7 @@ public class TrabajadorController {
     public String dashboard() {
         return "PanelTrabajador"; 
     }
-        
+
     @PostMapping("/login") // Manejador de la solicitud de inicio de sesión
     public String login(HttpSession session,@RequestParam("id") Long id, @RequestParam("contrasena") String contrasena,Model model ) {
         
